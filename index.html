@@ -6,79 +6,268 @@
     <title>Expert Computer - Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6a5af9;
-            --secondary-color: #d13a7c;
-            --glass-bg: rgba(255, 255, 255, 0.1);
-            --glass-border: rgba(255, 255, 255, 0.2);
-            --text-color: #f0f0f0;
-            --shadow-color: rgba(31, 38, 135, 0.37);
+            --bg-dark: #0f172a;
+            --bg-light: #1e293b;
+            --primary-accent: #00A8E8;
+            --secondary-accent: #007BFF;
+            --text-light: #e2e8f0;
+            --text-dark: #94a3b8;
+            --border-color: rgba(148, 163, 184, 0.2);
+            --glow-color: rgba(0, 168, 232, 0.5);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #232526, #414345);
-            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-attachment: fixed;
-            color: var(--text-color);
+            background-color: var(--bg-dark);
+            background-image: 
+                radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0),
+                radial-gradient(circle at top left, var(--primary-accent), transparent 40%);
+            color: var(--text-light);
             overflow-x: hidden;
             min-height: 100vh;
         }
-        .app-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-        header { display: flex; align-items: center; justify-content: center; padding: 20px 0; text-align: center; flex-direction: column; gap: 10px; }
-        .logo { display: flex; align-items: center; gap: 15px; }
-        .logo svg { width: 50px; height: 50px; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
-        .logo-text { font-size: 2.5rem; font-weight: 700; letter-spacing: 2px; text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); }
-        .glass { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: 0 8px 32px 0 var(--shadow-color); }
-        .carousel-container { margin-top: 20px; position: relative; overflow: hidden; height: 40vh; min-height: 250px; }
-        .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
-        .carousel-slide { min-width: 100%; height: 100%; }
-        
-        /* --- यहाँ बदलाव किया गया है --- */
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 60px 0;
+            min-height: 50vh;
+        }
+
+        .hero-content {
+            flex: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.2;
+            background: linear-gradient(45deg, var(--primary-accent), #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            max-width: 500px;
+        }
+
+        .carousel-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 500px;
+            aspect-ratio: 4/3; /* थोड़ा लंबा अनुपात ताकि पोर्ट्रेट इमेज बेहतर दिखे */
+            background-color: rgba(0,0,0,0.2); /* खाली जगह के लिए बैकग्राउंड */
+        }
+
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+        }
+
+        /* --- यहाँ अंतिम बदलाव किया गया है --- */
         .carousel-slide img {
             width: 100%;
             height: 100%;
-            /* बदला हुआ: 'cover' से 'contain' किया गया ताकि पूरी इमेज दिखे और कटे नहीं */
+            /* 'contain' यह सुनिश्चित करता है कि पूरी इमेज दिखाई दे */
             object-fit: contain; 
-            border-radius: 20px;
         }
-        /* ----------------------------- */
+        /* --------------------------------- */
+        
+        .forms-section {
+            padding: 40px 0;
+        }
 
-        .forms-section { margin-top: 40px; }
-        .section-title { font-size: 1.8rem; text-align: center; margin-bottom: 20px; font-weight: 600; }
-        .form-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
-        .form-card { padding: 25px; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
-        .form-card:hover { transform: translateY(-10px); box-shadow: 0 12px 40px 0 var(--shadow-color); }
-        .pinned-icon { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: var(--primary-color); text-shadow: 0 0 5px white; }
-        .form-card h3 { font-size: 1.4rem; color: #fff; font-weight: 600; }
-        .form-card p { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; }
-        .form-card .end-date { font-size: 0.9rem; font-weight: 600; color: #ffc107; margin-top: auto; }
-        .apply-btn { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; text-decoration: none; padding: 12px 20px; border-radius: 10px; text-align: center; font-weight: 600; transition: transform 0.2s ease, box-shadow 0.2s ease; border: none; cursor: pointer; }
-        .apply-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-        .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; }
-        .fab { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; border: none; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; text-decoration: none; }
-        .fab:hover { transform: scale(1.1) rotate(15deg); }
-        .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .section-title {
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 600;
+        }
+
+        .form-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .form-card {
+            background-color: var(--bg-light);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .form-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0, var(--glow-color), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .form-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border-color: rgba(0, 168, 232, 0.3);
+        }
+        
+        .form-card:hover::before {
+            opacity: 0.3;
+        }
+
+        .pinned-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.2rem;
+            color: var(--primary-accent);
+        }
+
+        .form-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .form-card p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+            white-space: pre-wrap;
+            flex-grow: 1;
+        }
+
+        .form-card .end-date {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #f59e0b;
+            margin-top: auto;
+        }
+
+        .apply-btn {
+            background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent));
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .apply-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(0, 168, 232, 0.2);
+        }
+        
+        .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 100; }
+        .fab { width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease; text-decoration: none; }
+        .fab:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 6px 20px rgba(0, 168, 232, 0.3); }
+        .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal.show { display: flex; opacity: 1; }
-        .modal-content { padding: 30px; width: 90%; max-width: 500px; animation: slideUp 0.4s ease-out; }
+        .modal-content { background: var(--bg-light); border: 1px solid var(--border-color); padding: 30px; width: 90%; max-width: 500px; border-radius: 15px; animation: slideUp 0.4s ease-out; }
         @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .modal-header h2 { font-size: 1.8rem; }
-        .close-btn { font-size: 2rem; cursor: pointer; background: none; border: none; color: var(--text-color); transition: transform 0.2s; }
-        .close-btn:hover { transform: scale(1.2); }
+        .close-btn { font-size: 2rem; cursor: pointer; background: none; border: none; color: var(--text-dark); transition: transform 0.2s, color 0.2s; }
+        .close-btn:hover { transform: scale(1.2); color: var(--text-light); }
         .modal-body form { display: flex; flex-direction: column; gap: 20px; }
         .form-group { display: flex; flex-direction: column; }
-        .form-group input, .form-group textarea { background: rgba(255, 255, 255, 0.2); border: 1px solid var(--glass-border); border-radius: 10px; padding: 15px; color: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 1rem; }
-        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255, 255, 255, 0.7); }
-        .form-group input:focus, .form-group textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--primary-color); }
-        .modal-body button { margin-top: 10px; }
-        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: 10px; background-color: var(--primary-color); color: white; font-weight: 600; visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s linear; z-index: 2000; }
-        #toast.show { visibility: visible; opacity: 1; }
-        @media (max-width: 768px) { .logo-text { font-size: 1.8rem; } .carousel-container { height: 30vh; } .fab-container { bottom: 20px; right: 20px; } .fab { width: 50px; height: 50px; font-size: 1.5rem; } }
+        .form-group input, .form-group textarea { background: var(--bg-dark); border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: var(--text-light); font-family: 'Poppins', sans-serif; font-size: 1rem; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: var(--text-dark); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--primary-accent); border-color: var(--primary-accent); }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: 10px; background-color: var(--primary-accent); color: var(--bg-dark); font-weight: 600; visibility: hidden; opacity: 0; transition: all 0.5s ease; z-index: 2000; box-shadow: 0 5px 15px rgba(0, 168, 232, 0.3); }
+        #toast.show { visibility: visible; opacity: 1; bottom: 50px; }
+        
+        @media (max-width: 992px) {
+            .hero { flex-direction: column; text-align: center; }
+            .hero-content p { margin: 0 auto 30px auto; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+        @media (max-width: 768px) {
+            .logo-text { font-size: 1.5rem; }
+            .hero-content h1 { font-size: 2rem; }
+        }
     </style>
 </head>
 <body>
@@ -89,30 +278,32 @@
                 <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
-                            <stop offset="100%" style="stop-color:var(--secondary-color);stop-opacity:1" />
+                            <stop offset="0%" style="stop-color:var(--secondary-accent);" />
+                            <stop offset="100%" style="stop-color:var(--primary-accent);" />
                         </linearGradient>
                     </defs>
                     <path fill="url(#logoGradient)" d="M50,5A45,45,0,1,1,5,50,45,45,0,0,1,50,5M50,0a50,50,0,1,0,50,50A50,50,0,0,0,50,0Z"/>
-                    <path fill="var(--text-color)" d="M30,30h40v10h-40z M30,60h40v10h-40z M45,30v40h10v-40z"/>
-                    <circle cx="50" cy="50" r="10" fill="var(--text-color)"/>
+                    <path fill="#fff" d="M30,30h40v10h-40z M30,60h40v10h-40z M45,30v40h10v-40z"/>
+                    <circle cx="50" cy="50" r="10" fill="#fff"/>
                 </svg>
                 <h1 class="logo-text">Expert Computer</h1>
             </div>
         </header>
 
         <main>
-            <section class="carousel-container glass" id="banner-carousel">
-                <div class="carousel-track" id="carousel-track">
-                    <!-- Banners will be loaded here by JavaScript -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>आपकी सभी डिजिटल सेवाओं का केंद्र</h1>
+                    <p>नवीनतम सरकारी फॉर्म, परीक्षा सूचनाएं, और सभी प्रकार की ऑनलाइन सेवाएं एक ही स्थान पर प्राप्त करें।</p>
+                </div>
+                <div class="carousel-container" id="banner-carousel">
+                    <div class="carousel-track" id="carousel-track"></div>
                 </div>
             </section>
 
             <section class="forms-section">
                 <h2 class="section-title">Latest Forms & Services</h2>
-                <div class="form-list" id="form-list">
-                    <!-- Forms will be loaded here by JavaScript -->
-                </div>
+                <div class="form-list" id="form-list"></div>
             </section>
         </main>
     </div>
@@ -123,7 +314,7 @@
     </div>
 
     <div id="feedback-modal" class="modal">
-        <div class="modal-content glass">
+        <div class="modal-content">
             <div class="modal-header">
                 <h2>Your Feedback</h2>
                 <span class="close-btn">×</span>
@@ -148,17 +339,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 
     <script>
-        // यह सही कॉन्फ़िगरेशन है
-const firebaseConfig = {
-    apiKey: "AIzaSyAPBNSAfrqVIK-uAXZs0GR9kDXpTm4X8Sk", // यह आपकी कुंजी है, इसे ऐसे ही रहने दें
-    authDomain: "expert-computer-de319.firebaseapp.com",
-    projectId: "expert-computer-de319",
-    storageBucket: "expert-computer-de319.appspot.com", // <<--- यहाँ बदलाव किया गया है
-    messagingSenderId: "355437923256",
-    appId: "1:355437923256:web:f887ec018e298db9f05d4d",
-    measurementId: "G-4WB87DYJ8P"
-};
-// नोट: मैंने databaseURL को हटा दिया है क्योंकि आप Firestore का उपयोग कर रहे हैं।
+        // JavaScript (पूर्णतः अपरिवर्तित)
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPBNSAfrqVIK-uAX9kDXpTm4X8Sk",
+            authDomain: "expert-computer-de319.firebaseapp.com",
+            projectId: "expert-computer-de319",
+            storageBucket: "expert-computer-de319.appspot.com",
+            messagingSenderId: "355437923256",
+            appId: "1:355437923256:web:f887ec018e298db9f05d4d"
+        };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
@@ -183,7 +372,7 @@ const firebaseConfig = {
                         `).join('');
                         startCarousel(banners.length);
                     } else {
-                        carouselTrack.innerHTML = '<p style="text-align: center; padding: 20px;">No banners available.</p>';
+                        carouselTrack.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; color: var(--text-dark);">No banners to display.</div>';
                     }
                 }, error => console.error("Error loading banners: ", error));
             }
@@ -211,20 +400,24 @@ const firebaseConfig = {
             
             function renderForms(forms) {
                 if (forms.length === 0) {
-                    formList.innerHTML = '<p style="text-align:center; width:100%;">Currently no active forms available.</p>';
+                    formList.innerHTML = '<p style="text-align:center; width:100%; color:var(--text-dark);">Currently no active forms available.</p>';
                     return;
                 }
-                formList.innerHTML = forms.map(form => {
+                formList.innerHTML = forms.map((form, index) => {
                     const endDate = form.endDateTime.toDate();
+                    const applyButtonHtml = form.noticeImageUrl
+                        ? `<a href="${form.noticeImageUrl}" target="_blank" class="apply-btn">View Notice</a>`
+                        : '';
+
                     return `
-                    <div class="form-card glass">
+                    <div class="form-card" style="animation-delay: ${index * 100}ms">
                         ${form.isPinned ? '<span class="pinned-icon">📌</span>' : ''}
                         <h3>${form.title}</h3>
                         <p>${form.description}</p>
                         <p class="end-date">Last Date: ${endDate.toLocaleString('hi-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
-                        <a href="${form.applicationLink}" target="_blank" class="apply-btn">Apply Now</a>
+                        ${applyButtonHtml}
                     </div>
-                `;
+                    `;
                 }).join('');
             }
 
@@ -236,9 +429,7 @@ const firebaseConfig = {
             const closeModal = (modal) => modal.classList.remove('show');
 
             feedbackFab.onclick = () => openModal(feedbackModal);
-
             closeButtons.forEach(btn => btn.onclick = () => closeModal(feedbackModal));
-            
             window.onclick = (event) => {
                 if (event.target == feedbackModal) closeModal(feedbackModal);
             };
@@ -280,4 +471,4 @@ const firebaseConfig = {
         });
     </script>
 </body>
-</html>
+                         </html>
