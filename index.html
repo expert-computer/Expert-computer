@@ -41,212 +41,141 @@
             min-height: 100vh;
         }
 
-        .app-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .logo svg {
-            width: 40px;
-            height: 40px;
-            animation: pulse 2s infinite ease-in-out;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .logo-text {
-            font-size: 1.8rem;
-            font-weight: 600;
-        }
-
-        .hero {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            padding: 60px 0;
-            min-height: 50vh;
-        }
-
-        .hero-content {
-            flex: 1;
-            animation: fadeInUp 0.8s ease-out;
-        }
-
-        .hero-content h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            line-height: 1.2;
-            background: linear-gradient(45deg, var(--primary-accent), #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 15px;
-        }
-
-        .hero-content p {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            max-width: 500px;
-        }
-
-        .carousel-container {
-            flex: 1;
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 500px;
-            aspect-ratio: 4/3; /* थोड़ा लंबा अनुपात ताकि पोर्ट्रेट इमेज बेहतर दिखे */
-            background-color: rgba(0,0,0,0.2); /* खाली जगह के लिए बैकग्राउंड */
-        }
-
-        .carousel-track {
-            display: flex;
-            height: 100%;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .carousel-slide {
-            min-width: 100%;
-            height: 100%;
-        }
-
-        /* --- यहाँ अंतिम बदलाव किया गया है --- */
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            /* 'contain' यह सुनिश्चित करता है कि पूरी इमेज दिखाई दे */
-            object-fit: contain; 
-        }
-        /* --------------------------------- */
-        
-        .forms-section {
-            padding: 40px 0;
-        }
-
-        .section-title {
-            font-size: 2.2rem;
-            text-align: center;
-            margin-bottom: 40px;
-            font-weight: 600;
-        }
-
-        .form-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 25px;
-        }
-
-        .form-card {
-            background-color: var(--bg-light);
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            border-radius: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            animation: fadeInUp 0.5s ease-out forwards;
-            opacity: 0;
-        }
-        
-        .form-card::before {
-            content: '';
-            position: absolute;
+        /* --- लोडर स्टाइल यहाँ से शुरू --- */
+        .loader-overlay {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 0, var(--glow-color), transparent 70%);
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            
+            /* -- अनूठा एनिमेटेड ग्रेडिएंट बैकग्राउंड -- */
+            background: linear-gradient(-45deg, #0f172a, #003d5b, #0f172a, #007BFF);
+            background-size: 400% 400%;
+            animation: animateGradient 15s ease infinite;
+        }
+        
+        @keyframes animateGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .loader-overlay.hidden {
             opacity: 0;
-            transition: opacity 0.4s ease;
+            visibility: hidden;
             pointer-events: none;
         }
 
-        .form-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-            border-color: rgba(0, 168, 232, 0.3);
-        }
-        
-        .form-card:hover::before {
-            opacity: 0.3;
+        #container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
-        .pinned-icon {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 1.2rem;
-            color: var(--primary-accent);
-        }
-
-        .form-card h3 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .form-card p {
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            line-height: 1.6;
-            white-space: pre-wrap;
-            flex-grow: 1;
-        }
-
-        .form-card .end-date {
-            font-size: 0.9rem;
+        #h3 {
+            color: #fff;
             font-weight: 500;
-            color: #f59e0b;
-            margin-top: auto;
-        }
-
-        .apply-btn {
-            background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent));
-            color: white;
-            text-decoration: none;
-            padding: 12px 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-weight: 600;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-        }
-
-        .apply-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 20px rgba(0, 168, 232, 0.2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            animation: pulseText 2s infinite ease-in-out;
         }
         
+        @keyframes pulseText {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        #ring {
+            width: 190px;
+            height: 190px;
+            border: 1px solid transparent;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        #ring:nth-child(1) {
+            border-bottom: 8px solid rgb(0, 225, 255);
+            animation: rotate1 2s linear infinite;
+        }
+
+        @keyframes rotate1 {
+            from { transform: rotateX(50deg) rotateZ(110deg); }
+            to { transform: rotateX(50deg) rotateZ(470deg); }
+        }
+
+        #ring:nth-child(2) {
+            border-bottom: 8px solid rgb(240, 19, 67);
+            animation: rotate2 2s linear infinite;
+        }
+
+        @keyframes rotate2 {
+            from { transform: rotateX(20deg) rotateY(50deg) rotateZ(20deg); }
+            to { transform: rotateX(20deg) rotateY(50deg) rotateZ(380deg); }
+        }
+
+        #ring:nth-child(3) {
+            border-bottom: 8px solid rgb(3, 255, 179);
+            animation: rotate3 2s linear infinite;
+        }
+
+        @keyframes rotate3 {
+            from { transform: rotateX(40deg) rotateY(130deg) rotateZ(450deg); }
+            to { transform: rotateX(40deg) rotateY(130deg) rotateZ(90deg); }
+        }
+
+        #ring:nth-child(4) {
+            border-bottom: 8px solid rgb(207, 135, 1);
+            animation: rotate4 2s linear infinite;
+        }
+
+        @keyframes rotate4 {
+            from { transform: rotateX(70deg) rotateZ(270deg); }
+            to { transform: rotateX(70deg) rotateZ(630deg); }
+        }
+        /* --- लोडर स्टाइल यहाँ समाप्त --- */
+
+        /* बाकी सभी CSS नियम अपरिवर्तित हैं */
+        .app-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; border-bottom: 1px solid var(--border-color); }
+        .logo { display: flex; align-items: center; gap: 15px; }
+        .logo svg { width: 40px; height: 40px; animation: pulse 2s infinite ease-in-out; }
+        .logo-text { font-size: 1.8rem; font-weight: 600; }
+        .hero { display: flex; align-items: center; gap: 40px; padding: 60px 0; min-height: 50vh; }
+        .hero-content { flex: 1; animation: fadeInUp 0.8s ease-out; }
+        .hero-content h1 { font-size: 3rem; font-weight: 700; line-height: 1.2; background: linear-gradient(45deg, var(--primary-accent), #fff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 15px; }
+        .hero-content p { font-size: 1.1rem; color: var(--text-dark); max-width: 500px; }
+        .carousel-container { flex: 1; position: relative; overflow: hidden; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); max-width: 500px; aspect-ratio: 4/3; background-color: rgba(0,0,0,0.2); }
+        .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .carousel-slide { min-width: 100%; height: 100%; }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: contain; }
+        .forms-section { padding: 40px 0; }
+        .section-title { font-size: 2.2rem; text-align: center; margin-bottom: 40px; font-weight: 600; }
+        .form-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .form-card { background-color: var(--bg-light); border: 1px solid var(--border-color); padding: 25px; border-radius: 15px; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; animation: fadeInUp 0.5s ease-out forwards; opacity: 0; }
+        .form-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at 50% 0, var(--glow-color), transparent 70%); opacity: 0; transition: opacity 0.4s ease; pointer-events: none; }
+        .form-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); border-color: rgba(0, 168, 232, 0.3); }
+        .form-card:hover::before { opacity: 0.3; }
+        .pinned-icon { position: absolute; top: 15px; right: 15px; font-size: 1.2rem; color: var(--primary-accent); }
+        .form-card h3 { font-size: 1.3rem; font-weight: 600; color: var(--text-light); }
+        .form-card p { font-size: 0.95rem; color: var(--text-dark); line-height: 1.6; white-space: pre-wrap; flex-grow: 1; }
+        .form-card .end-date { font-size: 0.9rem; font-weight: 500; color: #f59e0b; margin-top: auto; }
+        .apply-btn { background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent)); color: white; text-decoration: none; padding: 12px 20px; border-radius: 10px; text-align: center; font-weight: 600; transition: transform 0.2s ease, box-shadow 0.2s ease; border: none; cursor: pointer; display: inline-block; }
+        .apply-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0, 168, 232, 0.2); }
         .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; z-index: 100; }
         .fab { width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(45deg, var(--secondary-accent), var(--primary-accent)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: all 0.3s ease; text-decoration: none; }
         .fab:hover { transform: scale(1.1) rotate(15deg); box-shadow: 0 6px 20px rgba(0, 168, 232, 0.3); }
         .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); backdrop-filter: blur(5px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
         .modal.show { display: flex; opacity: 1; }
         .modal-content { background: var(--bg-light); border: 1px solid var(--border-color); padding: 30px; width: 90%; max-width: 500px; border-radius: 15px; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .modal-header h2 { font-size: 1.8rem; }
         .close-btn { font-size: 2rem; cursor: pointer; background: none; border: none; color: var(--text-dark); transition: transform 0.2s, color 0.2s; }
@@ -272,6 +201,18 @@
 </head>
 <body>
 
+    <!-- लोडर HTML -->
+    <div class="loader-overlay">
+        <div id="container">
+            <div id="ring"></div>
+            <div id="ring"></div>
+            <div id="ring"></div>
+            <div id="ring"></div>
+            <div id="h3">loading</div>
+        </div>
+    </div>
+    
+    <!-- मुख्य ऐप सामग्री -->
     <div class="app-container">
         <header>
             <div class="logo">
@@ -353,11 +294,23 @@
         const db = firebase.firestore();
 
         document.addEventListener('DOMContentLoaded', () => {
+            const loader = document.querySelector('.loader-overlay');
             const carouselTrack = document.getElementById('carousel-track');
             const formList = document.getElementById('form-list');
             
             let currentSlide = 0;
             let slideInterval;
+            
+            let bannersLoaded = false;
+            let formsLoaded = false;
+            let contentIsLoading = true;
+
+            function hideLoaderIfReady() {
+                if (contentIsLoading && bannersLoaded && formsLoaded) {
+                    loader.classList.add('hidden');
+                    contentIsLoading = false;
+                }
+            }
 
             function loadBanners() {
                 db.collection('banners').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
@@ -374,7 +327,15 @@
                     } else {
                         carouselTrack.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; color: var(--text-dark);">No banners to display.</div>';
                     }
-                }, error => console.error("Error loading banners: ", error));
+                    if (!bannersLoaded) {
+                        bannersLoaded = true;
+                        hideLoaderIfReady();
+                    }
+                }, error => {
+                    console.error("Error loading banners: ", error);
+                    bannersLoaded = true;
+                    hideLoaderIfReady();
+                });
             }
 
             function startCarousel(slideCount) {
@@ -395,7 +356,15 @@
                    const sortedForms = [...pinnedForms.sort((a,b) => a.endDateTime.toMillis() - b.endDateTime.toMillis()), 
                                       ...otherForms.sort((a,b) => a.endDateTime.toMillis() - b.endDateTime.toMillis())];
                    renderForms(sortedForms);
-                }, error => console.error("Error loading forms: ", error));
+                   if (!formsLoaded) {
+                       formsLoaded = true;
+                       hideLoaderIfReady();
+                   }
+                }, error => {
+                    console.error("Error loading forms: ", error);
+                    formsLoaded = true;
+                    hideLoaderIfReady();
+                });
             }
             
             function renderForms(forms) {
@@ -471,4 +440,4 @@
         });
     </script>
 </body>
-                         </html>
+    </html>
