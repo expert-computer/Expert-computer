@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expert Computer - Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6a5af9;
+            --secondary-color: #d13a7c;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-color: #f0f0f0;
+            --shadow-color: rgba(31, 38, 135, 0.37);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #232526, #414345);
+            background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-attachment: fixed;
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        .app-container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        header { display: flex; align-items: center; justify-content: center; padding: 20px 0; text-align: center; flex-direction: column; gap: 10px; }
+        .logo { display: flex; align-items: center; gap: 15px; }
+        .logo svg { width: 50px; height: 50px; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .logo-text { font-size: 2.5rem; font-weight: 700; letter-spacing: 2px; text-shadow: 0 0 10px var(--primary-color), 0 0 20px var(--secondary-color); }
+        .glass { background: var(--glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: 20px; border: 1px solid var(--glass-border); box-shadow: 0 8px 32px 0 var(--shadow-color); }
+        .carousel-container { margin-top: 20px; position: relative; overflow: hidden; height: 40vh; min-height: 250px; }
+        .carousel-track { display: flex; height: 100%; transition: transform 0.5s ease-in-out; }
+        .carousel-slide { min-width: 100%; height: 100%; }
+        
+        /* --- यहाँ बदलाव किया गया है --- */
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            /* बदला हुआ: 'cover' से 'contain' किया गया ताकि पूरी इमेज दिखे और कटे नहीं */
+            object-fit: contain; 
+            border-radius: 20px;
+        }
+        /* ----------------------------- */
+
+        .forms-section { margin-top: 40px; }
+        .section-title { font-size: 1.8rem; text-align: center; margin-bottom: 20px; font-weight: 600; }
+        .form-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+        .form-card { padding: 25px; display: flex; flex-direction: column; gap: 15px; transition: transform 0.3s ease, box-shadow 0.3s ease; position: relative; overflow: hidden; }
+        .form-card:hover { transform: translateY(-10px); box-shadow: 0 12px 40px 0 var(--shadow-color); }
+        .pinned-icon { position: absolute; top: 15px; right: 15px; font-size: 1.5rem; color: var(--primary-color); text-shadow: 0 0 5px white; }
+        .form-card h3 { font-size: 1.4rem; color: #fff; font-weight: 600; }
+        .form-card p { font-size: 0.95rem; line-height: 1.6; white-space: pre-wrap; }
+        .form-card .end-date { font-size: 0.9rem; font-weight: 600; color: #ffc107; margin-top: auto; }
+        .apply-btn { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; text-decoration: none; padding: 12px 20px; border-radius: 10px; text-align: center; font-weight: 600; transition: transform 0.2s ease, box-shadow 0.2s ease; border: none; cursor: pointer; }
+        .apply-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        .fab-container { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 15px; }
+        .fab { width: 60px; height: 60px; border-radius: 50%; background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; cursor: pointer; border: none; box-shadow: 0 4px 15px var(--shadow-color); transition: all 0.3s ease; text-decoration: none; }
+        .fab:hover { transform: scale(1.1) rotate(15deg); }
+        .modal { position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
+        .modal.show { display: flex; opacity: 1; }
+        .modal-content { padding: 30px; width: 90%; max-width: 500px; animation: slideUp 0.4s ease-out; }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .modal-header h2 { font-size: 1.8rem; }
+        .close-btn { font-size: 2rem; cursor: pointer; background: none; border: none; color: var(--text-color); transition: transform 0.2s; }
+        .close-btn:hover { transform: scale(1.2); }
+        .modal-body form { display: flex; flex-direction: column; gap: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group input, .form-group textarea { background: rgba(255, 255, 255, 0.2); border: 1px solid var(--glass-border); border-radius: 10px; padding: 15px; color: var(--text-color); font-family: 'Poppins', sans-serif; font-size: 1rem; }
+        .form-group input::placeholder, .form-group textarea::placeholder { color: rgba(255, 255, 255, 0.7); }
+        .form-group input:focus, .form-group textarea:focus { outline: none; box-shadow: 0 0 0 2px var(--primary-color); }
+        .modal-body button { margin-top: 10px; }
+        #toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 15px 25px; border-radius: 10px; background-color: var(--primary-color); color: white; font-weight: 600; visibility: hidden; opacity: 0; transition: visibility 0s, opacity 0.5s linear; z-index: 2000; }
+        #toast.show { visibility: visible; opacity: 1; }
+        @media (max-width: 768px) { .logo-text { font-size: 1.8rem; } .carousel-container { height: 30vh; } .fab-container { bottom: 20px; right: 20px; } .fab { width: 50px; height: 50px; font-size: 1.5rem; } }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:var(--primary-color);stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:var(--secondary-color);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path fill="url(#logoGradient)" d="M50,5A45,45,0,1,1,5,50,45,45,0,0,1,50,5M50,0a50,50,0,1,0,50,50A50,50,0,0,0,50,0Z"/>
+                    <path fill="var(--text-color)" d="M30,30h40v10h-40z M30,60h40v10h-40z M45,30v40h10v-40z"/>
+                    <circle cx="50" cy="50" r="10" fill="var(--text-color)"/>
+                </svg>
+                <h1 class="logo-text">Expert Computer</h1>
+            </div>
+        </header>
+
+        <main>
+            <section class="carousel-container glass" id="banner-carousel">
+                <div class="carousel-track" id="carousel-track">
+                    <!-- Banners will be loaded here by JavaScript -->
+                </div>
+            </section>
+
+            <section class="forms-section">
+                <h2 class="section-title">Latest Forms & Services</h2>
+                <div class="form-list" id="form-list">
+                    <!-- Forms will be loaded here by JavaScript -->
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="fab-container">
+        <a href="https://wa.me/919602053579" target="_blank" class="fab" id="chat-fab" title="Chat on WhatsApp">💬</a>
+        <button class="fab" id="feedback-fab" title="Feedback">⭐</button>
+    </div>
+
+    <div id="feedback-modal" class="modal">
+        <div class="modal-content glass">
+            <div class="modal-header">
+                <h2>Your Feedback</h2>
+                <span class="close-btn">×</span>
+            </div>
+            <div class="modal-body">
+                <form id="feedback-form">
+                     <div class="form-group">
+                        <input type="text" id="feedback-name" placeholder="आपका नाम" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="feedback-message" rows="4" placeholder="आपका फ़ीडबैक..." required></textarea>
+                    </div>
+                    <button type="submit" class="apply-btn">Submit Feedback</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+        // यह सही कॉन्फ़िगरेशन है
+const firebaseConfig = {
+    apiKey: "AIzaSyAPBNSAfrqVIK-uAXZs0GR9kDXpTm4X8Sk", // यह आपकी कुंजी है, इसे ऐसे ही रहने दें
+    authDomain: "expert-computer-de319.firebaseapp.com",
+    projectId: "expert-computer-de319",
+    storageBucket: "expert-computer-de319.appspot.com", // <<--- यहाँ बदलाव किया गया है
+    messagingSenderId: "355437923256",
+    appId: "1:355437923256:web:f887ec018e298db9f05d4d",
+    measurementId: "G-4WB87DYJ8P"
+};
+// नोट: मैंने databaseURL को हटा दिया है क्योंकि आप Firestore का उपयोग कर रहे हैं।
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const carouselTrack = document.getElementById('carousel-track');
+            const formList = document.getElementById('form-list');
+            
+            let currentSlide = 0;
+            let slideInterval;
+
+            function loadBanners() {
+                db.collection('banners').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                    const banners = snapshot.docs.map(doc => doc.data());
+                    if (banners.length > 0) {
+                        carouselTrack.innerHTML = banners.map(banner => `
+                            <div class="carousel-slide">
+                                <a href="${banner.redirectUrl || '#'}" target="_blank">
+                                    <img src="${banner.imageUrl}" alt="Banner">
+                                </a>
+                            </div>
+                        `).join('');
+                        startCarousel(banners.length);
+                    } else {
+                        carouselTrack.innerHTML = '<p style="text-align: center; padding: 20px;">No banners available.</p>';
+                    }
+                }, error => console.error("Error loading banners: ", error));
+            }
+
+            function startCarousel(slideCount) {
+                if (slideInterval) clearInterval(slideInterval);
+                if (slideCount <= 1) return;
+                slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slideCount;
+                    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+                }, 4000);
+            }
+            
+            function loadForms() {
+                const now = new Date();
+                db.collection('forms').where('endDateTime', '>', now).orderBy('endDateTime').onSnapshot(snapshot => {
+                   const allForms = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                   const pinnedForms = allForms.filter(form => form.isPinned);
+                   const otherForms = allForms.filter(form => !form.isPinned);
+                   const sortedForms = [...pinnedForms.sort((a,b) => a.endDateTime.toMillis() - b.endDateTime.toMillis()), 
+                                      ...otherForms.sort((a,b) => a.endDateTime.toMillis() - b.endDateTime.toMillis())];
+                   renderForms(sortedForms);
+                }, error => console.error("Error loading forms: ", error));
+            }
+            
+            function renderForms(forms) {
+                if (forms.length === 0) {
+                    formList.innerHTML = '<p style="text-align:center; width:100%;">Currently no active forms available.</p>';
+                    return;
+                }
+                formList.innerHTML = forms.map(form => {
+                    const endDate = form.endDateTime.toDate();
+                    return `
+                    <div class="form-card glass">
+                        ${form.isPinned ? '<span class="pinned-icon">📌</span>' : ''}
+                        <h3>${form.title}</h3>
+                        <p>${form.description}</p>
+                        <p class="end-date">Last Date: ${endDate.toLocaleString('hi-IN', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</p>
+                        <a href="${form.applicationLink}" target="_blank" class="apply-btn">Apply Now</a>
+                    </div>
+                `;
+                }).join('');
+            }
+
+            const feedbackModal = document.getElementById('feedback-modal');
+            const feedbackFab = document.getElementById('feedback-fab');
+            const closeButtons = document.querySelectorAll('.close-btn');
+
+            const openModal = (modal) => modal.classList.add('show');
+            const closeModal = (modal) => modal.classList.remove('show');
+
+            feedbackFab.onclick = () => openModal(feedbackModal);
+
+            closeButtons.forEach(btn => btn.onclick = () => closeModal(feedbackModal));
+            
+            window.onclick = (event) => {
+                if (event.target == feedbackModal) closeModal(feedbackModal);
+            };
+
+            const toast = document.getElementById('toast');
+            function showToast(message) {
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+            }
+
+            const feedbackForm = document.getElementById('feedback-form');
+            const feedbackNameInput = document.getElementById('feedback-name');
+            feedbackNameInput.value = localStorage.getItem('expertComputerUserName') || '';
+
+            feedbackForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = feedbackNameInput.value;
+                const message = document.getElementById('feedback-message').value;
+                localStorage.setItem('expertComputerUserName', name);
+
+                db.collection('feedback').add({
+                    name: name,
+                    message: message,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).then(() => {
+                    showToast('Thank you for your feedback!');
+                    closeModal(feedbackModal);
+                    feedbackForm.reset();
+                    feedbackNameInput.value = name;
+                }).catch(error => {
+                    console.error("Error submitting feedback: ", error);
+                    showToast('Failed to submit feedback. Please try again.');
+                });
+            });
+
+            loadBanners();
+            loadForms();
+        });
+    </script>
+</body>
+</html>
